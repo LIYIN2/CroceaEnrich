@@ -8,11 +8,5 @@ Description: This package performs GO and KEGG enrichment analysis for Larimicht
 License: GPL-3
 Depends: R (>= 3.5.0)
 Imports: 
-    clusterProfiler,
-    org.Lcrocea.eg.db,
-    ggplot2,
-    dplyr,
-    stringr,
-    AnnotationDbi
 RoxygenNote: 7.3.2
 Encoding: UTF-8
