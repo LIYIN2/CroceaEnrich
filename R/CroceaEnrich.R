@@ -9,17 +9,12 @@ CroceaEnrich <- function(file, orgdb, prefix = "CroceaEnrich_Result") {
 
   # 加载必要的 R 包，如果未安装则自动安装
   if (!requireNamespace("clusterProfiler", quietly = TRUE)) install.packages("clusterProfiler")
-  if (!requireNamespace("ggplot2", quietly = TRUE)) install.packages("ggplot2")
-  if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
-  if (!requireNamespace("stringr", quietly = TRUE)) install.packages("stringr")
-  if (!requireNamespace("AnnotationDbi", quietly = TRUE)) install.packages("AnnotationDbi")
+  if (!requireNamespace("tidyverse", quietly = TRUE)) install.packages("tidyverse")
 
   # 加载 R 包
   library(clusterProfiler)
-  library(ggplot2)
-  library(dplyr)
-  library(stringr)
-  library(AnnotationDbi)
+  library(tidyverse)
+
 
   # 读取基因列表文件并设置列名
   gene <- file
