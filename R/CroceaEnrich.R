@@ -109,6 +109,7 @@ CroceaEnrich <- function(file, orgdb, prefix = "CroceaEnrich_Result") {
     theme_bw(base_size = 12, base_rect_size = 1.5) +
     theme(legend.text = element_text(color = "black", size = 10, face = "bold"),
           text = element_text(face = "bold", color = "black"),
+          axis.title.y = element_text(margin = margin(r = 120)),
           plot.margin = unit(c(1, 3.3, 1, 3.3), "cm"))
 
   ggsave(filename = paste0(output_dir, "/", prefix, "_GO_enrichment.pdf"),
@@ -130,6 +131,7 @@ CroceaEnrich <- function(file, orgdb, prefix = "CroceaEnrich_Result") {
     theme_bw(base_size = 12, base_rect_size = 1.5) +
     theme(legend.text = element_text(color = "black", size = 10, face = "bold"),
           text = element_text(face = "bold", color = "black"),
+          axis.title.y = element_text(margin = margin(r = 120)),
           plot.margin = unit(c(1, 3.3, 1, 3.3), "cm"))
 
   ggsave(filename = paste0(output_dir, "/", prefix, "_KEGG_enrichment.pdf"),
