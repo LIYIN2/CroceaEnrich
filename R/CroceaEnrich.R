@@ -38,6 +38,7 @@ CroceaEnrich <- function(file, orgdb, prefix = "CroceaEnrich_Result") {
                          readable = FALSE)
 
   go_results_df <- as.data.frame(go_results)
+  go_results_df <- go_results_df[order(go_results_df$qvalue),]
   go_filtered <- go_results_df[go_results_df$p.adjust < 0.05 & go_results_df$qvalue < 0.2,]
   go_top20 <- go_results_df[1:20,]
 
