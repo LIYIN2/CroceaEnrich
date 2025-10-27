@@ -7,13 +7,16 @@
 
 CroceaEnrich <- function(file, orgdb, prefix = "CroceaEnrich_Result") {
 
-  # 加载必要的 R 包，如果未安装则自动安装
-  if (!requireNamespace("clusterProfiler", quietly = TRUE)) install.packages("clusterProfiler")
-  if (!requireNamespace("tidyverse", quietly = TRUE)) install.packages("tidyverse")
-
-  # 加载 R 包
+  if (!requireNamespace("clusterProfiler", quietly = TRUE)) {
+    install.packages("clusterProfiler", dependencies = TRUE)}
+  if (!requireNamespace("tidyverse", quietly = TRUE)) {
+    install.packages("tidyverse", dependencies = TRUE)}
+  if (!requireNamespace("egg", quietly = TRUE)) {
+    install.packages("egg", dependencies = TRUE)}
+  
   library(clusterProfiler)
-  library(tidyverse)
+  library(tidyverse) 
+  library(egg)
 
 
   # 读取基因列表文件并设置列名
@@ -103,18 +106,25 @@ CroceaEnrich <- function(file, orgdb, prefix = "CroceaEnrich_Result") {
   p_go <- ggplot(data = go_top20, aes(x = number, y = Rich.factor)) +
     geom_point(mapping = aes(size = Count, colour = -log10(qvalue), shape = ONTOLOGY)) +
     coord_flip() +
-    scale_color_gradient(low = "Blue", high = "red") +
+    scale_color_gradient(low = "#6BAED6",high = "#EE6A50")+
     scale_x_discrete(labels = labels_go) +
     labs(title = "Top 20 of GO enrichment", x = " ", y = "Rich factor",
          colour = "-log10(qvalue)", size = "Gene number") +
-    theme_bw(base_size = 12, base_rect_size = 1.5) +
-    theme(legend.text = element_text(color = "black", size = 10, face = "bold"),
-          text = element_text(face = "bold", color = "black"),
-          axis.title.y = element_text(margin = margin(r = 120)),
-          plot.margin = unit(c(1, 3.3, 1, 3.3), "cm"))
+    theme_bw(base_family = "Helvetica") +
+    theme(axis.text.x = element_text(angle = 60, hjust = 1, colour = "black"),
+        axis.text.y = element_text(colour = "black"),
+        axis.title.x = element_text(size = 12, face = "bold"),
+        axis.title.y = element_text(size = 12, face = "bold"),
+        plot.title = element_text(lineheight=.4, size=13, face = "bold", hjust = 0.5),
+        legend.position = "right")
+    
+    go_fixed <- set_panel_size(
+    p_go,
+    width = unit(4, "cm"),
+    height = unit(15, "cm"))
 
   ggsave(filename = paste0(output_dir, "/", prefix, "_GO_enrichment.pdf"),
-         plot = p_go, height = 8)
+         plot = go_fixed, height = 8)
 
   # ----------- KEGG 富集结果可视化 -----------
   labels_kegg <- (levels(factor(kegg_top20$Description))[as.factor(kegg_top20$Description)])
@@ -125,16 +135,23 @@ CroceaEnrich <- function(file, orgdb, prefix = "CroceaEnrich_Result") {
   p_kegg <- ggplot(data = kegg_top20, aes(x = number, y = Rich.factor)) +
     geom_point(mapping = aes(size = Count, colour = -log10(qvalue))) +
     coord_flip() +
-    scale_color_gradient(low = "Blue", high = "red") +
+    scale_color_gradient(low = "#6BAED6",high = "#EE6A50")+
     scale_x_discrete(labels = labels_kegg) +
     labs(title = "Top 20 of KEGG enrichment", x = " ", y = "Rich factor",
          colour = "-log10(qvalue)", size = "Gene number") +
-    theme_bw(base_size = 12, base_rect_size = 1.5) +
-    theme(legend.text = element_text(color = "black", size = 10, face = "bold"),
-          text = element_text(face = "bold", color = "black"),
-          axis.title.y = element_text(margin = margin(r = 120)),
-          plot.margin = unit(c(1, 3.3, 1, 3.3), "cm"))
+    theme_bw(base_family = "Helvetica") +
+    theme(axis.text.x = element_text(angle = 60, hjust = 1, colour = "black"),
+        axis.text.y = element_text(colour = "black"),
+        axis.title.x = element_text(size = 12, face = "bold"),
+        axis.title.y = element_text(size = 12, face = "bold"),
+        plot.title = element_text(lineheight=.4, size=13, face = "bold", hjust = 0.5),
+        legend.position = "right")
+  
+  kegg_fixed <- set_panel_size(
+  p_kegg,
+  width = unit(4, "cm"),
+  height = unit(15, "cm"))
 
   ggsave(filename = paste0(output_dir, "/", prefix, "_KEGG_enrichment.pdf"),
-         plot = p_kegg, height = 8)
+         plot = kegg_fixed, height = 8)
 }
