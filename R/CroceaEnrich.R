@@ -16,7 +16,7 @@ CroceaEnrich <- function(file, orgdb, prefix = "CroceaEnrich_Result") {
   
   library(clusterProfiler)
   library(tidyverse) 
-  library(egg)
+
 
 
   #01 读取基因列表文件并设置列名
